@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kebijakan Privasi · Jaga Warung</title>
+  <meta name="description" content="Data apa yang diolah aplikasi Jaga Warung, di mana disimpan, dan cara menghapusnya.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <a class="brand" href="./">Jaga Warung <span class="tag">POS</span></a>
+
+  <h1>Kebijakan Privasi</h1>
+  <p class="meta">Berlaku sejak 3 Oktober 2026 · <a class="lang" href="#english">English version</a></p>
+
+  <p>Jaga Warung adalah aplikasi kasir (POS) Android untuk warung dan toko kecil, dikembangkan oleh silodev ("kami"). Halaman ini menjelaskan data apa yang diolah aplikasi, di mana data itu disimpan, dan cara menghapusnya.</p>
+
+  <div class="card">
+    <h3>Ringkasnya</h3>
+    <ul>
+      <li>Semua data toko disimpan di HP Anda. Aplikasi bisa dipakai penuh tanpa internet dan tanpa akun.</li>
+      <li>Data baru dikirim ke cloud kalau pemilik toko sendiri menyalakan <strong>Sinkronisasi cloud</strong> dengan akun Google.</li>
+      <li>Kami tidak menjual data, tidak menampilkan iklan, dan tidak memakai pelacak iklan atau analitik.</li>
+    </ul>
+  </div>
+
+  <h2>1. Data yang disimpan di HP</h2>
+  <ul>
+    <li>Profil toko: nama, alamat, nomor HP, NPWP (kalau diisi), dan gambar QRIS toko.</li>
+    <li>Barang, harga, stok, serta pembelian dan utang ke supplier.</li>
+    <li>Transaksi penjualan, retur, shift dan kas, kasbon, serta poin member.</li>
+    <li>Pelanggan: nama, nomor HP/WhatsApp, limit kasbon, dan catatan. Supplier: nama dan nomor HP.</li>
+    <li>Pengguna aplikasi (pemilik dan kasir): nama dan PIN. PIN disimpan dalam bentuk acak (hash), bukan angka aslinya.</li>
+    <li>Riwayat aktivitas, misalnya pembatalan transaksi atau perubahan harga.</li>
+  </ul>
+  <p>Data ini tetap di HP dan tidak kami terima, kecuali Anda menyalakan Sinkronisasi cloud.</p>
+
+  <h2>2. Sinkronisasi cloud (pilihan)</h2>
+  <p>Kalau pemilik menghubungkan akun Google di <strong>Akun › Sinkronisasi cloud</strong>:</p>
+  <ul>
+    <li>Kami menerima alamat email, nama, dan ID akun Google Anda lewat Google Firebase Authentication.</li>
+    <li>Data toko dikirim ke Google Cloud Firestore: profil toko (nama, alamat, nomor HP), barang dan stok, penjualan dan retur, shift, pelanggan, supplier, riwayat aktivitas, dan transfer stok antar outlet, termasuk nama pengguna yang tercatat di dalamnya. PIN, gambar QRIS, dan file cadangan tidak pernah dikirim.</li>
+    <li>Tujuannya hanya supaya pemilik bisa memantau toko dari HP lain (Pantau toko) dan memindahkan stok antar outlet.</li>
+    <li>Hanya akun Google pemilik yang bisa membuka data ini. Aturan keamanan cloud menolak akun lain, dan data dikirim terenkripsi (HTTPS).</li>
+    <li>Google menjalankan layanan ini untuk kami sebagai penyedia layanan, dan dapat mengolah data teknis seperti alamat IP untuk menjalankan dan mengamankannya. Lihat <a href="https://firebase.google.com/support/privacy">privasi Firebase</a>.</li>
+  </ul>
+  <p>Menekan <strong>Putuskan</strong> hanya menghentikan pengiriman. Untuk menghapus data di cloud, lihat bagian 5.</p>
+
+  <h2>3. Izin dan fitur HP</h2>
+  <ul>
+    <li><strong>Kamera</strong>: memindai barcode barang. Gambar diolah langsung di HP oleh Google ML Kit, lalu tidak disimpan atau dikirim.</li>
+    <li><strong>Foto yang Anda pilih</strong>: hanya untuk membaca kode QRIS toko dari gambar stikernya, juga diolah di HP.</li>
+    <li><strong>Bluetooth</strong>: menyambung ke printer struk.</li>
+    <li><strong>Internet</strong>: hanya untuk Sinkronisasi cloud, Pantau toko, dan transfer stok.</li>
+  </ul>
+  <p>Pustaka Google ML Kit dapat mengirim data teknis tentang kinerja dan pemakaian pemindai ke Google. Gambar kamera dan isi barcode tidak termasuk.</p>
+
+  <h2>4. Berbagi data</h2>
+  <ul>
+    <li>Kami tidak menjual atau menyewakan data kepada siapa pun.</li>
+    <li>Data hanya keluar dari HP kalau Anda sendiri yang mengirimnya: lewat Sinkronisasi cloud, struk yang dikirim lewat WhatsApp atau aplikasi lain, file cadangan atau laporan Excel yang Anda simpan atau bagikan, dan struk yang dicetak. Data yang dikirim lewat aplikasi lain mengikuti kebijakan privasi aplikasi tersebut.</li>
+    <li>Kami dapat membuka data kalau diwajibkan oleh hukum.</li>
+  </ul>
+
+  <h2>5. Berapa lama disimpan, dan cara menghapus</h2>
+  <ul>
+    <li><strong>Data di HP</strong> tersimpan sampai Anda menghapusnya di aplikasi, menghapus data aplikasi di pengaturan HP, atau meng-uninstall aplikasi. Buat <strong>Cadangan</strong> dulu kalau masih perlu.</li>
+    <li><strong>Data di cloud</strong> tersimpan selama Sinkronisasi cloud dipakai. Pemilik bisa menghapus semuanya beserta akun cloud-nya kapan saja di <strong>Akun › Sinkronisasi cloud › Hapus akun cloud</strong>, atau meminta lewat email. Kami memproses permintaan lewat email paling lambat 30 hari. Langkah lengkapnya ada di <a href="hapus-akun.html">Hapus akun dan data</a>.</li>
+  </ul>
+
+  <h2>6. Data pelanggan toko</h2>
+  <p>Data pelanggan dan supplier dimasukkan oleh pemilik atau kasir toko. Pemilik toko yang menentukan data apa yang dicatat dan bertanggung jawab memberi tahu pelanggannya. Kami hanya menyediakan alatnya.</p>
+
+  <h2>7. Anak-anak</h2>
+  <p>Jaga Warung dibuat untuk pemilik dan kasir toko, bukan untuk anak-anak.</p>
+
+  <h2>8. Hak Anda</h2>
+  <p>Anda bisa melihat, membetulkan, dan menghapus data langsung di aplikasi. Untuk data di cloud, hubungi kami lewat email di bawah.</p>
+
+  <h2>9. Perubahan</h2>
+  <p>Kalau kebijakan ini berubah, versi baru dipasang di halaman ini dengan tanggal berlaku yang baru.</p>
+
+  <h2>10. Kontak</h2>
+  <p><a href="mailto:silodev77@gmail.com">silodev77@gmail.com</a></p>
+
+  <hr>
+
+  <section id="english">
+    <h1>Privacy Policy</h1>
+    <p class="meta">Effective 3 October 2026</p>
+
+    <p>Jaga Warung is an Android point-of-sale app for small shops, developed by silodev ("we"). This page explains what data the app handles, where it is kept, and how to delete it.</p>
+
+    <div class="card">
+      <h3>In short</h3>
+      <ul>
+        <li>All shop data is stored on your phone. The app works fully without internet and without an account.</li>
+        <li>Data goes to the cloud only if the shop owner turns on <strong>Cloud sync</strong> with a Google account.</li>
+        <li>We do not sell data, show ads, or use advertising or analytics trackers.</li>
+      </ul>
+    </div>
+
+    <h2>1. Data stored on the phone</h2>
+    <ul>
+      <li>Shop profile: name, address, phone number, tax ID (NPWP, if entered), and the shop's QRIS image.</li>
+      <li>Products, prices, stock, and purchases from and debts to suppliers.</li>
+      <li>Sales, returns, shifts and cash, customer credit (kasbon), and member points.</li>
+      <li>Customers: name, phone/WhatsApp number, credit limit, and notes. Suppliers: name and phone number.</li>
+      <li>App users (owner and cashiers): name and PIN. PINs are stored hashed, never as the digits themselves.</li>
+      <li>An activity log, such as voided sales or price changes.</li>
+    </ul>
+    <p>This data stays on the phone and we do not receive it, unless you turn on Cloud sync.</p>
+
+    <h2>2. Cloud sync (optional)</h2>
+    <p>When the owner links a Google account under <strong>Akun › Sinkronisasi cloud</strong>:</p>
+    <ul>
+      <li>We receive your Google account's email address, name, and ID through Google Firebase Authentication.</li>
+      <li>Shop data is sent to Google Cloud Firestore: the shop profile (name, address, phone number), products and stock, sales and returns, shifts, customers, suppliers, the activity log, and stock transfers between outlets, including the user names recorded in them. PINs, the QRIS image and backup files are never sent.</li>
+      <li>This is only so the owner can watch the shop from another phone (Pantau toko) and move stock between outlets.</li>
+      <li>Only the owner's Google account can read this data. The cloud's security rules refuse any other account, and data travels encrypted (HTTPS).</li>
+      <li>Google runs this service for us as a service provider and may process technical data such as IP addresses to operate and secure it. See <a href="https://firebase.google.com/support/privacy">Firebase privacy</a>.</li>
+    </ul>
+    <p><strong>Putuskan</strong> (disconnect) only stops sending. To delete cloud data, see section 5.</p>
+
+    <h2>3. Permissions and phone features</h2>
+    <ul>
+      <li><strong>Camera</strong>: scanning product barcodes. Images are processed on the phone by Google ML Kit and are not stored or sent.</li>
+      <li><strong>Photos you pick</strong>: only to read the shop's QRIS code from a picture of its sticker, also processed on the phone.</li>
+      <li><strong>Bluetooth</strong>: connecting to a receipt printer.</li>
+      <li><strong>Internet</strong>: only for Cloud sync, Pantau toko, and stock transfers.</li>
+    </ul>
+    <p>The Google ML Kit library may send Google technical data about the scanner's performance and usage. Camera images and barcode contents are not included.</p>
+
+    <h2>4. Sharing</h2>
+    <ul>
+      <li>We do not sell or rent data to anyone.</li>
+      <li>Data leaves the phone only when you send it yourself: through Cloud sync, receipts sent by WhatsApp or other apps, backup files or Excel reports you save or share, and printed receipts. Data sent through other apps falls under those apps' privacy policies.</li>
+      <li>We may disclose data where the law requires it.</li>
+    </ul>
+
+    <h2>5. Retention and deletion</h2>
+    <ul>
+      <li><strong>Data on the phone</strong> is kept until you delete it in the app, clear the app's data in the phone's settings, or uninstall the app. Make a backup (Cadangan) first if you still need it.</li>
+      <li><strong>Cloud data</strong> is kept while Cloud sync is in use. The owner can delete all of it, together with the cloud account, at any time under <strong>Akun › Sinkronisasi cloud › Hapus akun cloud</strong>, or ask us by email. We act on email requests within 30 days. Full steps: <a href="hapus-akun.html#english">Delete your account and data</a>.</li>
+    </ul>
+
+    <h2>6. Shop customers' data</h2>
+    <p>Customer and supplier details are entered by the shop's owner or cashiers. The shop owner decides what is recorded and is responsible for informing their customers. We only provide the tool.</p>
+
+    <h2>7. Children</h2>
+    <p>Jaga Warung is made for shop owners and cashiers, not for children.</p>
+
+    <h2>8. Your rights</h2>
+    <p>You can see, correct and delete data directly in the app. For cloud data, contact us at the address below.</p>
+
+    <h2>9. Changes</h2>
+    <p>If this policy changes, the new version is posted on this page with a new effective date.</p>
+
+    <h2>10. Contact</h2>
+    <p><a href="mailto:silodev77@gmail.com">silodev77@gmail.com</a></p>
+  </section>
+</main>
+</body>
+</html>

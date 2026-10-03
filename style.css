@@ -1,0 +1,99 @@
+/* Jaga Warung public pages: the app's own tokens (CLAUDE.md §4), light only, no gradients. */
+:root {
+  --primary: #1d4ed8;
+  --primary-container: #eef3ff;
+  --background: #f5f7fb;
+  --surface: #ffffff;
+  --on-surface: #111827;
+  --on-surface-variant: #4b5563;
+  --outline: #e2e6ee;
+  --error: #b91c1c;
+  --orange: #f59e0b;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--on-surface);
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  color: var(--on-surface);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.brand .tag {
+  background: var(--orange);
+  color: #ffffff;
+  border-radius: 6px;
+  padding: 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+h1 { font-size: 28px; line-height: 1.25; font-weight: 800; letter-spacing: -0.01em; margin: 0 0 4px; }
+h2 { font-size: 20px; font-weight: 700; margin: 32px 0 8px; }
+h3 { font-size: 16px; font-weight: 700; margin: 20px 0 4px; }
+
+.meta { color: var(--on-surface-variant); font-size: 14px; margin: 0 0 24px; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--outline);
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+
+.card > :first-child { margin-top: 0; }
+.card > :last-child { margin-bottom: 0; }
+
+.lang {
+  display: inline-block;
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+a { color: var(--primary); }
+
+ul, ol { padding-left: 22px; }
+li { margin: 4px 0; }
+
+.links { list-style: none; padding: 0; }
+.links li { margin: 8px 0; }
+
+.links a {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--outline);
+  border-radius: 14px;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-weight: 600;
+  min-height: 48px;
+}
+
+.note { color: var(--on-surface-variant); font-size: 14px; }
+
+hr { border: 0; border-top: 1px solid var(--outline); margin: 48px 0 24px; }
+
+footer { color: var(--on-surface-variant); font-size: 14px; margin-top: 48px; }
