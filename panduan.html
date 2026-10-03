@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panduan Jaga Warung</title>
+<meta name="description" content="Panduan pengguna aplikasi kasir Jaga Warung: semua fitur dan cara memakainya, untuk pemilik dan kasir.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: a manual — sticky contents on the left from tablet width up, one reading column of about 68ch; on phones the contents fold into a disclosure at the top. Colours and type come from the app's own design system (CLAUDE.md §4). */
+:root {
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --ink: #111827;
+  --ink-2: #4b5563;
+  --line: #e2e6ee;
+  --line-strong: #cdd3df;
+  --blue: #1d4ed8;
+  --blue-ink: #1e3a8a;
+  --blue-soft: #eef3ff;
+  --green: #15803d;
+  --green-soft: #e8f5ec;
+  --amber: #b45309;
+  --amber-soft: #fef3e2;
+  --red: #b91c1c;
+  --orange: #e67e00;
+  --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --step-0: 1rem;
+  --step-1: 1.125rem;
+  --step-2: 1.375rem;
+  --step-3: 1.75rem;
+  --step-4: 2.375rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1220;
+    --surface: #151b2b;
+    --ink: #e7ebf3;
+    --ink-2: #a5aec0;
+    --line: #262f45;
+    --line-strong: #36405a;
+    --blue: #86a6ff;
+    --blue-ink: #c9d6ff;
+    --blue-soft: #1a2750;
+    --green: #5fc98b;
+    --green-soft: #12301f;
+    --amber: #f0a65a;
+    --amber-soft: #33240f;
+    --red: #f07a7a;
+    --orange: #ff9a2e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1220;
+  --surface: #151b2b;
+  --ink: #e7ebf3;
+  --ink-2: #a5aec0;
+  --line: #262f45;
+  --line-strong: #36405a;
+  --blue: #86a6ff;
+  --blue-ink: #c9d6ff;
+  --blue-soft: #1a2750;
+  --green: #5fc98b;
+  --green-soft: #12301f;
+  --amber: #f0a65a;
+  --amber-soft: #33240f;
+  --red: #f07a7a;
+  --orange: #ff9a2e;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--step-0);
+  line-height: 1.65;
+}
+a { color: var(--blue); text-underline-offset: 2px; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
+
+.wrap {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding-inline: 16px;
+  padding-block: 28px 64px;
+}
+
+/* Header */
+.masthead { display: grid; gap: 14px; padding-block: 8px 28px; border-bottom: 1px solid var(--line); margin-bottom: 28px; }
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: var(--step-1); letter-spacing: -0.01em; }
+.brand .tag { background: var(--orange); color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 1px 7px; border-radius: 6px; letter-spacing: 0.04em; }
+.eyebrow { font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); margin: 0; }
+h1 { font-size: clamp(1.9rem, 4.4vw, var(--step-4)); line-height: 1.15; font-weight: 800; letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+.lead { font-size: var(--step-1); color: var(--ink-2); margin: 0; max-width: 62ch; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 0; padding: 0; list-style: none; }
+.facts li { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: 0.875rem; font-weight: 600; color: var(--ink-2); }
+
+/* Two columns */
+.layout { display: grid; gap: 32px; }
+@media (min-width: 900px) {
+  .layout { grid-template-columns: 236px minmax(0, 1fr); gap: 48px; }
+}
+.toc-side { display: none; }
+@media (min-width: 900px) {
+  .toc-side { display: block; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 20px); align-self: start; max-height: calc(100vh - 40px); overflow-y: auto; padding-right: 4px; }
+  .toc-mobile { display: none; }
+}
+.toc-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-2); margin: 0 0 8px; }
+.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.toc a { display: flex; gap: 10px; padding: 6px 10px; border-radius: 10px; text-decoration: none; color: var(--ink-2); font-size: 0.9rem; font-weight: 500; line-height: 1.35; }
+.toc a:hover { background: var(--surface); color: var(--ink); }
+.toc a .n { color: var(--blue); font-weight: 700; font-variant-numeric: tabular-nums; min-width: 1.4em; }
+.toc-mobile { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 4px 8px; }
+.toc-mobile summary { cursor: pointer; padding: 10px 8px; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
+.toc-mobile .toc { padding: 0 0 8px; }
+
+/* Article */
+article { min-width: 0; max-width: 70ch; }
+section { scroll-margin-top: 20px; padding-block: 8px 28px; border-bottom: 1px solid var(--line); margin-bottom: 28px; }
+section:last-of-type { border-bottom: 0; }
+h2 { font-size: var(--step-3); line-height: 1.25; font-weight: 800; letter-spacing: -0.015em; margin: 0 0 12px; text-wrap: balance; display: flex; gap: 12px; align-items: baseline; }
+h2 .n { color: var(--blue); font-variant-numeric: tabular-nums; font-size: var(--step-2); }
+h3 { font-size: var(--step-1); font-weight: 700; margin: 26px 0 8px; text-wrap: balance; }
+p { margin: 0 0 12px; }
+ul, ol { margin: 0 0 14px; padding-left: 22px; }
+li { margin: 5px 0; }
+li > ul { margin: 6px 0 4px; }
+strong { font-weight: 700; }
+.muted { color: var(--ink-2); }
+
+/* Menu path, as the app labels it */
+.path { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px 4px; background: var(--blue-soft); color: var(--blue-ink); font-weight: 600; font-size: 0.9em; border-radius: 8px; padding: 1px 8px; white-space: normal; }
+.path i { font-style: normal; opacity: 0.6; }
+
+/* Numbered steps: real sequences only */
+ol.steps { list-style: none; padding: 0; counter-reset: s; display: grid; gap: 10px; }
+ol.steps > li { counter-increment: s; position: relative; padding-left: 40px; margin: 0; }
+ol.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0.1em; width: 26px; height: 26px; border-radius: 50%; background: var(--blue); color: var(--surface); font-weight: 700; font-size: 0.85rem; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+
+/* Callouts */
+.callout { border-radius: 14px; padding: 12px 16px; margin: 14px 0 16px; }
+.callout p:last-child, .callout ul:last-child { margin-bottom: 0; }
+.callout .label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.tip { background: var(--blue-soft); }
+.tip .label { color: var(--blue); }
+.warn { background: var(--amber-soft); }
+.warn .label { color: var(--amber); }
+.good { background: var(--green-soft); }
+.good .label { color: var(--green); }
+
+/* Role badges */
+.badge { display: inline-block; font-size: 0.75rem; font-weight: 700; border-radius: 6px; padding: 1px 7px; vertical-align: 1px; white-space: nowrap; }
+.badge.owner { background: var(--blue-soft); color: var(--blue-ink); }
+.badge.pin { background: var(--amber-soft); color: var(--amber); }
+
+/* Quick start */
+.quick { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 18px 20px; margin-bottom: 32px; }
+.quick h2 { font-size: var(--step-2); margin-bottom: 14px; }
+
+/* Payment example from the app's own rule */
+.pay { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 16px; margin: 14px 0 18px; display: grid; gap: 12px; max-width: 420px; }
+.pay .lbl { font-size: 0.8125rem; color: var(--ink-2); font-weight: 600; }
+.pay .total { font-size: 2.1rem; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.pay .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.pay .chips span { border: 1px solid var(--line-strong); border-radius: 12px; padding: 8px 12px; font-weight: 700; font-variant-numeric: tabular-nums; font-size: 0.95rem; }
+.pay .chips span.on { border: 2px solid var(--blue); color: var(--blue); padding: 7px 11px; }
+.pay .change { background: var(--green-soft); border-radius: 14px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.pay .change b { color: var(--green); font-size: 1.5rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.pay .change span { color: var(--green); font-weight: 600; }
+
+/* Tables */
+.table-wrap { overflow-x: auto; margin: 12px 0 18px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 0.925rem; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); font-weight: 700; background: var(--bg); }
+td.yes { color: var(--green); font-weight: 700; white-space: nowrap; }
+td.no { color: var(--ink-2); white-space: nowrap; }
+td.pin { color: var(--amber); font-weight: 700; white-space: nowrap; }
+
+dl.terms { display: grid; gap: 10px; margin: 0 0 14px; }
+dl.terms div { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 10px 14px; }
+dl.terms dt { font-weight: 700; }
+dl.terms dd { margin: 2px 0 0; color: var(--ink-2); }
+
+details.faq { border: 1px solid var(--line); background: var(--surface); border-radius: 14px; padding: 0 14px; margin: 0 0 10px; }
+details.faq summary { cursor: pointer; font-weight: 700; padding: 12px 0; min-height: 44px; }
+details.faq[open] summary { border-bottom: 1px solid var(--line); margin-bottom: 10px; }
+details.faq > :last-child { margin-bottom: 12px; }
+
+footer { margin-top: 12px; color: var(--ink-2); font-size: 0.9rem; display: grid; gap: 6px; }
+.copy { display: inline-flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.copy code { font-family: var(--font); font-weight: 700; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 2px 8px; user-select: all; }
+.copy button { font: inherit; font-size: 0.85rem; font-weight: 700; color: var(--blue); background: var(--blue-soft); border: 0; border-radius: 8px; padding: 4px 10px; cursor: pointer; min-height: 32px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <a class="brand" href="./" style="color: inherit; text-decoration: none">Jaga Warung <span class="tag">POS</span></a>
+    <p class="eyebrow">Panduan pengguna · versi 1.0.0</p>
+    <h1>Panduan Jaga Warung</h1>
+    <p class="lead">Cara memakai aplikasi kasir Jaga Warung, dari pertama dipasang sampai tutup toko. Untuk pemilik dan kasir warung, toko kelontong, dan minimarket kecil.</p>
+    <ul class="facts">
+      <li>Jalan tanpa internet</li>
+      <li>HP dan tablet Android</li>
+      <li>Data tersimpan di HP</li>
+    </ul>
+  </header>
+
+  <div class="layout">
+    <nav class="toc-side toc" aria-label="Daftar isi">
+      <p class="toc-title">Daftar isi</p>
+      <ol>
+        <li><a href="#mulai"><span class="n">1</span>Memulai pertama kali</a></li>
+        <li><a href="#layar"><span class="n">2</span>Lima menu utama</a></li>
+        <li><a href="#persiapan"><span class="n">3</span>Persiapan toko</a></li>
+        <li><a href="#barang"><span class="n">4</span>Barang dan stok</a></li>
+        <li><a href="#kas"><span class="n">5</span>Buka toko, kas, tutup toko</a></li>
+        <li><a href="#kasir"><span class="n">6</span>Jualan di Kasir</a></li>
+        <li><a href="#bayar"><span class="n">7</span>Pembayaran</a></li>
+        <li><a href="#batal"><span class="n">8</span>Batal dan retur</a></li>
+        <li><a href="#kasbon"><span class="n">9</span>Kasbon dan pelanggan</a></li>
+        <li><a href="#member"><span class="n">10</span>Member dan poin</a></li>
+        <li><a href="#supplier"><span class="n">11</span>Supplier dan barang masuk</a></li>
+        <li><a href="#opname"><span class="n">12</span>Stok opname</a></li>
+        <li><a href="#promo"><span class="n">13</span>Promo</a></li>
+        <li><a href="#laporan"><span class="n">14</span>Laporan</a></li>
+        <li><a href="#cloud"><span class="n">15</span>Cloud dan beberapa outlet</a></li>
+        <li><a href="#keamanan"><span class="n">16</span>PIN, aktivitas, cadangan</a></li>
+        <li><a href="#peran"><span class="n">17</span>Pemilik dan kasir</a></li>
+        <li><a href="#masalah"><span class="n">18</span>Kalau ada masalah</a></li>
+      </ol>
+    </nav>
+
+    <article>
+      <details class="toc-mobile toc">
+        <summary>Daftar isi</summary>
+        <ol>
+          <li><a href="#mulai"><span class="n">1</span>Memulai pertama kali</a></li>
+          <li><a href="#layar"><span class="n">2</span>Lima menu utama</a></li>
+          <li><a href="#persiapan"><span class="n">3</span>Persiapan toko</a></li>
+          <li><a href="#barang"><span class="n">4</span>Barang dan stok</a></li>
+          <li><a href="#kas"><span class="n">5</span>Buka toko, kas, tutup toko</a></li>
+          <li><a href="#kasir"><span class="n">6</span>Jualan di Kasir</a></li>
+          <li><a href="#bayar"><span class="n">7</span>Pembayaran</a></li>
+          <li><a href="#batal"><span class="n">8</span>Batal dan retur</a></li>
+          <li><a href="#kasbon"><span class="n">9</span>Kasbon dan pelanggan</a></li>
+          <li><a href="#member"><span class="n">10</span>Member dan poin</a></li>
+          <li><a href="#supplier"><span class="n">11</span>Supplier dan barang masuk</a></li>
+          <li><a href="#opname"><span class="n">12</span>Stok opname</a></li>
+          <li><a href="#promo"><span class="n">13</span>Promo</a></li>
+          <li><a href="#laporan"><span class="n">14</span>Laporan</a></li>
+          <li><a href="#cloud"><span class="n">15</span>Cloud dan beberapa outlet</a></li>
+          <li><a href="#keamanan"><span class="n">16</span>PIN, aktivitas, cadangan</a></li>
+          <li><a href="#peran"><span class="n">17</span>Pemilik dan kasir</a></li>
+          <li><a href="#masalah"><span class="n">18</span>Kalau ada masalah</a></li>
+        </ol>
+      </details>
+
+      <div class="quick" style="margin-top: 20px">
+        <h2>Mulai jualan dalam 5 langkah</h2>
+        <ol class="steps">
+          <li>Pasang aplikasi, lalu pilih <strong>Jualan di HP ini</strong>.</li>
+          <li>Isi nama toko, buat akun pemilik dengan PIN 6 angka, dan catat kode pemulihan.</li>
+          <li>Masukkan barang: <span class="path">Barang <i>›</i> Tambah Barang</span>.</li>
+          <li>Buka toko dan isi uang di laci: <span class="path">Beranda <i>›</i> Buka Toko</span>.</li>
+          <li>Jualan: buka <strong>Kasir</strong>, ketuk barang, tekan <strong>Bayar</strong>, lalu <strong>Selesaikan Transaksi</strong>.</li>
+        </ol>
+      </div>
+
+      <section id="mulai">
+        <h2><span class="n">1</span>Memulai pertama kali</h2>
+        <p>Jaga Warung mencatat penjualan, menghitung kembalian, mencetak struk, dan menjaga stok. Semua fitur kasir jalan tanpa internet, dan datanya tersimpan di HP. Internet hanya dipakai kalau pemilik menyalakan sinkronisasi cloud.</p>
+        <ol class="steps">
+          <li>Buka aplikasi. Setelah layar pembuka, ada tiga halaman pengenalan. Tekan <strong>Lewati</strong> atau panah untuk lanjut.</li>
+          <li>Pilih kegunaan HP ini:
+            <ul>
+              <li><strong>Jualan di HP ini</strong>: untuk HP kasir. Mencatat penjualan, stok, dan kas.</li>
+              <li><strong>Pantau toko saja</strong>: untuk HP pemilik yang hanya melihat data toko dari cloud. Lihat <a href="#cloud">bagian 15</a>.</li>
+            </ul>
+          </li>
+          <li>Isi <strong>Nama toko</strong>, lalu tekan <strong>Mulai</strong>. Alamat dan nomor HP bisa dilengkapi nanti.</li>
+          <li><strong>Buat akun pemilik</strong>: isi nama, buat PIN 6 angka, lalu ulangi PIN-nya.</li>
+          <li>Catat <strong>Kode pemulihan</strong> yang muncul, misalnya <code>4F7K-9Q2M</code>, lalu tekan <strong>Sudah saya catat</strong>.</li>
+        </ol>
+        <div class="callout warn">
+          <span class="label">Perhatian</span>
+          <p>Kode pemulihan hanya ditampilkan sekali. Kode ini satu-satunya cara membuat PIN baru kalau pemilik lupa PIN. Tulis di kertas dan simpan di tempat aman, jangan hanya di HP yang sama.</p>
+        </div>
+        <p>Setiap kali aplikasi dibuka, muncul layar <strong>Siapa yang jaga?</strong>. Pilih nama, lalu masukkan PIN. Kalau PIN salah beberapa kali, aplikasi meminta menunggu sebentar sebelum mencoba lagi.</p>
+      </section>
+
+      <section id="layar">
+        <h2><span class="n">2</span>Lima menu utama</h2>
+        <p>Di HP, menu ada di bawah layar. Di tablet, menu ada di kiri, dan layar Kasir terbagi dua: daftar barang di tengah, pesanan di kanan.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Menu</th><th>Isinya</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Beranda</strong></td><td>Penjualan hari ini, jumlah transaksi, untung kotor, tombol <strong>Mulai Jualan</strong>, menu cepat (Tambah Barang, Stok, Kasbon, Supplier, Laporan), daftar <strong>Stok menipis</strong>, dan pengingat utang supplier.</td></tr>
+              <tr><td><strong>Kasir</strong></td><td>Tempat jualan: cari atau scan barang, isi pesanan, lalu bayar.</td></tr>
+              <tr><td><strong>Barang</strong></td><td>Daftar barang dan stoknya, serta <strong>Harga hari ini</strong>, <strong>Stok opname</strong>, <strong>Promo</strong>, dan <strong>Transfer stok</strong>.</td></tr>
+              <tr><td><strong>Laporan</strong></td><td>Penjualan dan untung per periode, daftar transaksi, dan ekspor ke Excel atau PDF.</td></tr>
+              <tr><td><strong>Akun</strong></td><td>Siapa yang sedang jaga, profil toko, QRIS, kas, printer, pengguna, pengaturan, dan cadangan data.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <dl class="terms">
+          <div><dt>Untung kotor</dt><dd>Penjualan dikurangi PPN dan harga modal barang yang terjual.</dd></div>
+          <div><dt>Kasbon</dt><dd>Belanja yang dibayar belakangan oleh pelanggan, dicatat sebagai utang pelanggan ke toko.</dd></div>
+          <div><dt>Shift</dt><dd>Satu masa jaga, dari <strong>Buka Toko</strong> sampai <strong>Tutup Toko</strong>.</dd></div>
+          <div><dt>HPP / harga modal</dt><dd>Harga beli rata-rata sebuah barang. Diperbarui sendiri setiap ada barang masuk.</dd></div>
+        </dl>
+        <p class="muted">Pengenalan aplikasi bisa dibuka lagi kapan saja dari <span class="path">Akun <i>›</i> Lihat pengenalan aplikasi</span>.</p>
+      </section>
+
+      <section id="persiapan">
+        <h2><span class="n">3</span>Persiapan toko</h2>
+        <p>Cukup sekali di awal. Semuanya ada di menu <strong>Akun</strong> dan diatur oleh pemilik.</p>
+
+        <h3>Profil toko</h3>
+        <p><span class="path">Akun <i>›</i> Profil toko <i>›</i> Ubah profil</span>. Isi nama toko, alamat, nomor HP/WhatsApp, dan NPWP kalau ada. Data ini tampil di struk. NPWP hanya tampil bila toko memakai PPN.</p>
+
+        <h3>QRIS toko</h3>
+        <ol class="steps">
+          <li>Buka <span class="path">Akun <i>›</i> QRIS toko <i>›</i> Pilih gambar QRIS</span>.</li>
+          <li>Pilih file QRIS asli dari aplikasi bank atau merchant. Foto stiker juga bisa, asal jelas.</li>
+          <li>Kalau kodenya terbaca, aplikasi menampilkan nama merchant dan menyalakan <strong>Nominal otomatis</strong>. Total belanja langsung terisi saat pembeli scan.</li>
+        </ol>
+        <div class="callout tip">
+          <span class="label">Tips</span>
+          <p>Kalau aplikasi bank pembeli sering menolak QR dengan total, matikan <strong>Nominal otomatis</strong>. Pembeli lalu mengetik sendiri nominalnya.</p>
+        </div>
+
+        <h3>Printer struk</h3>
+        <ol class="steps">
+          <li>Nyalakan printer thermal Bluetooth, lalu pasangkan (pair) di pengaturan Bluetooth HP. PIN-nya biasanya <code>0000</code> atau <code>1234</code>.</li>
+          <li>Buka <span class="path">Akun <i>›</i> Printer struk <i>›</i> Atur printer</span>, lalu pilih printernya.</li>
+          <li>Pilih lebar kertas <strong>58 mm</strong> atau <strong>80 mm</strong>. Nyalakan <strong>Cetak otomatis</strong> kalau ingin struk langsung tercetak setiap transaksi.</li>
+          <li>Isi <strong>Tulisan di bawah struk</strong> bila perlu, lalu tekan <strong>Cetak tes</strong>.</li>
+        </ol>
+
+        <h3>Pengguna dan kasir</h3>
+        <p><span class="path">Akun <i>›</i> Pengguna <i>›</i> Kelola pengguna <i>›</i> Tambah pengguna</span>. Isi nama, pilih peran <strong>Pemilik</strong> atau <strong>Kasir</strong>, dan buat PIN 6 angka. Kasir yang sudah berhenti bekerja cukup dinonaktifkan; riwayatnya tetap tersimpan. Harus selalu ada minimal satu pemilik aktif. Apa saja yang boleh dilakukan kasir ada di <a href="#peran">bagian 17</a>.</p>
+
+        <h3>Pajak (PPN), bila toko memungut PPN</h3>
+        <p><span class="path">Akun <i>›</i> Pajak (PPN) <i>›</i> Atur pajak</span>. Pilih salah satu:</p>
+        <ul>
+          <li><strong>Tanpa PPN</strong> (awal): struk dan laporan tidak menampilkan PPN.</li>
+          <li><strong>Harga sudah termasuk PPN</strong>: total tidak berubah, struk menampilkan porsi PPN di dalamnya.</li>
+          <li><strong>PPN ditambahkan</strong>: PPN dihitung di atas total belanja dan dibayar pembeli.</li>
+        </ul>
+        <p>Tarif awal 11%. Barang kebutuhan pokok seperti beras atau telur bisa ditandai <strong>Bebas PPN</strong> di form barang.</p>
+
+        <h3>Member dan poin, bila ingin</h3>
+        <p>Lihat <a href="#member">bagian 10</a>.</p>
+      </section>
+
+      <section id="barang">
+        <h2><span class="n">4</span>Barang dan stok</h2>
+
+        <h3>Menambah barang</h3>
+        <p>Buka <span class="path">Barang <i>›</i> Tambah Barang</span>, atau <strong>Tambah Barang</strong> di Beranda. Isian yang wajib hanya nama dan harga jual.</p>
+        <ul>
+          <li><strong>Jenis</strong>: <em>Biasa (per satuan)</em> untuk barang yang dihitung, atau <em>Timbang (per kg)</em> untuk barang yang ditimbang seperti cabai dan telur. Jenis tidak bisa diubah setelah barang disimpan.</li>
+          <li><strong>Satuan</strong>, misalnya pcs, bungkus, botol.</li>
+          <li><strong>Harga jual</strong> dan <strong>Harga modal</strong>. Harga modal dipakai untuk menghitung untung kotor. Aplikasi memberi tanda bila harga jual di bawah modal.</li>
+          <li><strong>Stok awal</strong> dan <strong>Stok minimum</strong>. Barang masuk daftar <strong>Stok menipis</strong> saat stoknya mencapai angka minimum.</li>
+          <li><strong>Barcode</strong>: ketik atau scan dengan kamera. Satu barang boleh punya lebih dari satu barcode.</li>
+          <li><strong>Kategori</strong>: pilih, atau buat lewat <strong>+ Kategori baru</strong>. Kategori jadi tombol penyaring di Kasir.</li>
+        </ul>
+
+        <h3>Satuan lain: pak dan dus</h3>
+        <p>Di bagian <strong>Satuan lain</strong>, tekan <strong>+ Tambah satuan</strong>. Isi nama satuan, isinya, dan harganya. Setiap satuan boleh punya barcode sendiri. Contoh: 1 pak berisi 10 pcs dan 1 dus berisi 40 pcs. Stok selalu dihitung dalam satuan dasar (pcs), jadi menjual 1 dus mengurangi stok 40 pcs.</p>
+
+        <h3>Harga grosir</h3>
+        <p>Di <strong>Harga grosir</strong>, tekan <strong>+ Tambah harga grosir</strong>. Isi mulai beli berapa dan harganya. Harga yang lebih murah langsung berlaku di Kasir saat jumlahnya tercapai.</p>
+
+        <h3>Barang timbang dan barcode timbangan</h3>
+        <p>Untuk toko yang punya timbangan pencetak label, isi <strong>Kode timbangan</strong> (kode PLU di timbangan, 1–99999), atau scan label timbangannya di kolom barcode. Label timbangan berawalan 20–29 lalu dikenali langsung di Kasir, lengkap dengan berat atau harganya.</p>
+
+        <h3>Mengubah dan menonaktifkan barang</h3>
+        <p>Ketuk barang di daftar, ubah isinya, lalu <strong>Simpan</strong>. Barang yang tidak dijual lagi bisa dinonaktifkan dengan <strong>Nonaktifkan barang</strong>. Barang itu hilang dari Kasir, tapi riwayat penjualan dan stoknya tetap ada, dan bisa diaktifkan lagi. Gunakan penyaring <strong>Stok menipis</strong> dan <strong>Tidak aktif</strong> di daftar barang untuk mencarinya.</p>
+
+        <h3>Mengubah stok</h3>
+        <p>Buka barangnya. Di bawah form ada tiga tombol:</p>
+        <ul>
+          <li><strong>Barang masuk</strong>: isi jumlah, satuan, dan harga beli. Stok bertambah dan harga modal (HPP) dihitung ulang sebagai rata-rata.</li>
+          <li><strong>Sesuaikan stok</strong>: pilih <em>Hitung ulang</em> lalu isi jumlah yang benar-benar ada di rak, atau pilih <em>Rusak / kedaluwarsa</em> lalu isi jumlah yang dibuang. <span class="badge pin">Kasir: perlu PIN pemilik untuk hitung ulang</span></li>
+          <li><strong>Riwayat stok</strong>: setiap perubahan stok tercatat, termasuk penjualan, retur, dan barang masuk.</li>
+        </ul>
+        <div class="callout tip">
+          <span class="label">Tips</span>
+          <p>Barang dari supplier lebih baik dicatat lewat <span class="path">Supplier <i>›</i> Terima barang</span>, supaya utang ke supplier ikut tercatat. Lihat <a href="#supplier">bagian 11</a>.</p>
+        </div>
+
+        <h3>Harga hari ini</h3>
+        <p>Harga sayur, ikan, dan ayam sering berubah harian. Buka <span class="path">Barang <i>›</i> Harga hari ini</span> untuk mengubah harga semua barang timbang sekaligus. Harga baru langsung dipakai di Kasir, dan aplikasi memberi tanda bila ada yang di bawah modal.</p>
+      </section>
+
+      <section id="kas">
+        <h2><span class="n">5</span>Buka toko, kas, tutup toko</h2>
+        <p>Penjualan hanya bisa dicatat saat toko sedang buka. Kasir dan pemilik sama-sama bisa membuka dan menutup toko.</p>
+
+        <h3>Buka toko</h3>
+        <ol class="steps">
+          <li>Tekan <strong>Buka Toko</strong> di Beranda. Tombol yang sama juga muncul di Kasir saat toko belum dibuka.</li>
+          <li>Hitung uang di laci, lalu isi <strong>Kas awal</strong>. Isi 0 bila laci kosong.</li>
+        </ol>
+
+        <h3>Kas masuk dan kas keluar</h3>
+        <p>Untuk uang di laci yang bukan dari penjualan. Buka <span class="path">Akun <i>›</i> Kas &amp; shift <i>›</i> Buka Kas</span>, lalu pilih <strong>Kas masuk</strong> atau <strong>Kas keluar</strong>.</p>
+        <ul>
+          <li>Alasan kas masuk: Tambah uang kecil, atau Lainnya.</li>
+          <li>Alasan kas keluar: Belanja stok, Operasional, Ambil pribadi, atau Lainnya. Kas keluar tercatat di riwayat aktivitas.</li>
+        </ul>
+
+        <h3>Tutup toko</h3>
+        <ol class="steps">
+          <li>Buka <span class="path">Akun <i>›</i> Kas &amp; shift <i>›</i> Buka Kas</span>, lalu tekan <strong>Tutup Toko</strong>.</li>
+          <li>Hitung semua uang tunai di laci, isi <strong>Uang di laci</strong>, lalu tekan <strong>Lanjut</strong>.</li>
+          <li>Aplikasi baru sekarang menampilkan jumlah yang <strong>Seharusnya</strong> ada, yang <strong>Dihitung</strong>, dan <strong>Selisih</strong>-nya: Pas, Kurang, atau Lebih.</li>
+          <li>Bila ada selisih, isi alasannya. Toko yang ditutup dengan selisih tercatat di riwayat aktivitas.</li>
+          <li>Periksa ringkasan shift: kas awal, penjualan tunai dan non-tunai, kasbon, kas masuk dan keluar, dan jumlah transaksi. Tekan <strong>Cetak ringkasan</strong> bila perlu, lalu <strong>Selesai</strong>.</li>
+        </ol>
+        <div class="callout tip">
+          <span class="label">Kenapa jumlahnya disembunyikan?</span>
+          <p>Supaya uang di laci benar-benar dihitung, bukan sekadar disamakan dengan angka di layar. Selama toko buka, layar Kas sengaja tidak menampilkan jumlah yang seharusnya ada.</p>
+        </div>
+      </section>
+
+      <section id="kasir">
+        <h2><span class="n">6</span>Jualan di Kasir</h2>
+
+        <h3>Memasukkan barang ke pesanan</h3>
+        <ul>
+          <li><strong>Ketuk kartu barang</strong>. Barang yang sudah masuk pesanan diberi garis biru dan angka jumlahnya.</li>
+          <li><strong>Cari</strong> nama barang atau ketik barcodenya di kolom cari, atau pilih kategori di baris tombol kategori.</li>
+          <li><strong>Scan dengan kamera</strong>: tekan tombol scan, lalu arahkan kamera ke barcode. Scan bisa terus-menerus untuk banyak barang. Tekan <strong>Selesai</strong> bila sudah. Scan berhenti sendiri setelah 20 detik tanpa barang baru, supaya tidak ada barang yang masuk tanpa sengaja; tekan <strong>Lanjut scan</strong> untuk melanjutkan.</li>
+          <li><strong>Scanner barcode</strong> USB atau Bluetooth langsung bisa dipakai. Scan saja barangnya saat layar Kasir terbuka.</li>
+          <li><strong>Barang timbang</strong>: isi beratnya, atau pakai tombol cepat ¼, ½, dan 1 kg. Label dari timbangan bisa langsung di-scan.</li>
+          <li><strong>Barang dengan beberapa satuan</strong>: pilih satuannya, misalnya pcs, pak, atau dus.</li>
+        </ul>
+
+        <h3>Mengatur pesanan</h3>
+        <p>Di HP, bar di bawah layar menampilkan jumlah barang dan total. Ketuk bar itu untuk membuka <strong>Pesanan</strong>. Di tablet, pesanan selalu tampil di panel kanan.</p>
+        <ul>
+          <li>Ubah jumlah dengan tombol − dan +. Tombol <strong>Kosongkan</strong> menghapus semua barang di pesanan.</li>
+          <li><strong>+ Tambah diskon</strong>: pilih untuk seluruh pesanan atau satu barang, dalam rupiah atau persen. Diskon tercatat di riwayat aktivitas.</li>
+          <li>Promo dan harga grosir berlaku sendiri. Bila satu barang kena beberapa promo, yang dipakai adalah yang paling murah untuk pembeli.</li>
+          <li><strong>+ Pilih pelanggan</strong>: catat siapa pembelinya, untuk semua cara bayar. Nomor WhatsApp-nya terisi otomatis saat mengirim struk, dan belanjanya masuk ke riwayat pelanggan. Kalau pelanggan itu member, ia juga mendapat poin.</li>
+        </ul>
+
+        <h3>Menyimpan pesanan sementara</h3>
+        <p>Kalau pembeli masih memilih barang dan ada pembeli lain yang menunggu, tekan <strong>Simpan</strong> di pesanan. Isi nama pembeli bila mau, lalu layani pembeli berikutnya. Pesanan yang disimpan bisa dibuka lagi dari tombol <strong>N pesanan disimpan</strong> di Kasir.</p>
+        <div class="callout warn">
+          <span class="label">Perhatian</span>
+          <p>Stok barang di pesanan yang disimpan langsung dipotong, dan baru kembali bila pesanannya dihapus. Kalau pesanan disimpan dihapus, kembalikan juga barangnya ke rak.</p>
+        </div>
+      </section>
+
+      <section id="bayar">
+        <h2><span class="n">7</span>Pembayaran</h2>
+        <p>Tekan <strong>Bayar</strong>. Layar Pembayaran menampilkan total belanja. Tekan <strong>Lihat rincian</strong> untuk memeriksa barangnya. Pilih cara bayar:</p>
+
+        <h3>Tunai</h3>
+        <p>Isi <strong>Uang diterima</strong>, atau tekan salah satu tombol cepat: <strong>Uang pas</strong> dan dua nominal pembulatan ke atas. Kembalian langsung terlihat dalam kartu hijau.</p>
+        <div class="pay" aria-label="Contoh layar pembayaran tunai">
+          <div>
+            <div class="lbl">Total belanja</div>
+            <div class="total">Rp 166.000</div>
+          </div>
+          <div class="chips"><span>Uang pas</span><span>Rp 170.000</span><span class="on">Rp 200.000</span></div>
+          <div class="change"><span>Kembalian</span><b>Rp 34.000</b></div>
+        </div>
+        <p class="muted">Tombol pembulatan mengikuti total: belanja Rp 166.000 memberi pilihan Rp 170.000 dan Rp 200.000; belanja Rp 3.500 memberi Rp 5.000 dan Rp 10.000.</p>
+
+        <h3>QRIS</h3>
+        <ol class="steps">
+          <li>Tunjukkan QR ke pembeli. Bila <strong>Nominal otomatis</strong> menyala, totalnya sudah terisi. Tekan <strong>Perbesar</strong> supaya mudah di-scan, atau <strong>Cetak QR</strong> ke printer.</li>
+          <li>Tunggu notifikasi pembayaran di aplikasi bank atau merchant Anda.</li>
+          <li>Setelah uangnya masuk, tekan <strong>Uang sudah masuk</strong>.</li>
+        </ol>
+        <p>Kalau aplikasi pembeli menolak QR dengan total, tekan <strong>QR tidak bisa dibayar? Tampilkan QRIS biasa</strong>; pembeli lalu mengetik nominalnya sendiri.</p>
+
+        <h3>Transfer</h3>
+        <p>Pastikan uangnya sudah masuk ke rekening sebelum menyelesaikan transaksi.</p>
+
+        <h3>Kasbon</h3>
+        <p>Pilih pelanggan, atau tambah lewat <strong>+ Pelanggan baru</strong>. Aplikasi menampilkan kasbon pelanggan saat ini dan memberi peringatan bila belanja ini melebihi limitnya. Kalau pelanggan sudah dipilih di Kasir, kasbon otomatis atas nama pelanggan itu.</p>
+
+        <h3>Poin member dan PPN</h3>
+        <p>Bila pembeli member dan poinnya cukup, muncul pilihan <strong>Pakai N poin</strong> sebagai potongan. Bila toko memakai PPN, PPN ikut tampil di rincian.</p>
+
+        <h3>Selesai</h3>
+        <p>Tekan <strong>Selesaikan Transaksi</strong>. Layar <strong>Transaksi berhasil</strong> menampilkan nomor struk, jam, total, yang dibayar, dan kembalian. Nomor struk diawali kode HP, misalnya <code>D01-000124</code>, sehingga struk dari HP yang berbeda tidak pernah bernomor sama.</p>
+        <ul>
+          <li><strong>Cetak Struk</strong>: cetak ke printer Bluetooth.</li>
+          <li><strong>Kirim Struk</strong>: kirim ke WhatsApp pembeli, atau bagikan lewat aplikasi lain.</li>
+          <li><strong>Transaksi Baru</strong>: kembali ke Kasir untuk pembeli berikutnya.</li>
+        </ul>
+      </section>
+
+      <section id="batal">
+        <h2><span class="n">8</span>Batal dan retur</h2>
+        <p>Transaksi tidak pernah dihapus. Kesalahan diperbaiki dengan <strong>membatalkan</strong> transaksi atau <strong>meretur</strong> barang, dan keduanya tercatat di riwayat aktivitas. Untuk menemukan transaksinya, buka <span class="path">Laporan <i>›</i> Daftar transaksi</span>, lalu ketuk transaksi itu.</p>
+
+        <h3>Membatalkan transaksi</h3>
+        <p>Untuk transaksi yang salah input atau pembelinya batal. Di <strong>Detail transaksi</strong>, tekan <strong>Batalkan transaksi</strong>, pilih alasannya (Salah input, Pembeli batal, atau Lainnya), lalu kembalikan uangnya ke pembeli. Stok kembali, dan transaksi tetap terlihat dengan tanda <strong>Dibatalkan</strong>. Kalau transaksinya kasbon, kasbon pelanggan berkurang.</p>
+        <ul>
+          <li>Hanya transaksi di shift yang sedang buka yang bisa dibatalkan.</li>
+          <li>Transaksi yang sudah ada returnya tidak bisa dibatalkan.</li>
+          <li><span class="badge pin">Kasir: perlu PIN pemilik</span></li>
+        </ul>
+
+        <h3>Retur barang</h3>
+        <p>Untuk barang yang dikembalikan pembeli. Di <strong>Detail transaksi</strong>, tekan <strong>Retur barang</strong>, lalu pilih barang dan jumlahnya. Tandai setiap barang <strong>Kembali ke stok</strong> atau <strong>Rusak</strong>, pilih cara mengembalikan uangnya, lalu simpan. Struk retur bisa dicetak.</p>
+        <ul>
+          <li>Retur bisa sampai 7 hari setelah transaksi, dan toko harus sedang buka.</li>
+          <li>Transaksi kasbon yang diretur mengurangi kasbon pelanggan. Poin member yang didapat dari barang itu ikut ditarik, dan PPN-nya ikut dikembalikan.</li>
+          <li><span class="badge pin">Kasir: perlu PIN pemilik</span></li>
+        </ul>
+      </section>
+
+      <section id="kasbon">
+        <h2><span class="n">9</span>Kasbon dan pelanggan</h2>
+        <p>Buka <span class="path">Beranda <i>›</i> Kasbon</span>. Di atas terlihat total kasbon yang belum dibayar. Daftar pelanggan bisa disaring: Belum lunas, Semua pelanggan, Member, dan Tidak aktif.</p>
+
+        <h3>Menambah pelanggan</h3>
+        <p>Tekan <strong>Tambah pelanggan</strong>. Isi nama, nomor HP/WhatsApp, limit kasbon (kosongkan bila tanpa limit), catatan seperti "rumah dekat masjid", dan nyalakan <strong>Member</strong> bila ikut program poin. Pelanggan juga bisa ditambah langsung dari Kasir atau saat bayar dengan Kasbon.</p>
+
+        <h3>Di detail pelanggan</h3>
+        <ul>
+          <li><strong>Sisa kasbon</strong> dan sisa limitnya.</li>
+          <li><strong>Terima pembayaran</strong>: isi jumlah, atau tekan tombol lunas, lalu pilih cara bayarnya. Pembayaran tunai masuk laci, jadi toko harus sedang buka.</li>
+          <li><strong>Kirim pengingat WhatsApp</strong>: pesan berisi jumlah kasbon dikirim ke nomor pelanggan.</li>
+          <li><strong>Riwayat kasbon</strong> dan <strong>Riwayat belanja</strong>: jumlah transaksi, total belanja, dan kapan terakhir belanja.</li>
+          <li><strong>Ubah data</strong> atau <strong>Nonaktifkan pelanggan</strong>. Pelanggan nonaktif tidak muncul saat bayar Kasbon, tapi riwayatnya tetap ada.</li>
+        </ul>
+        <p>Kalau pelanggan membayar lebih dari kasbonnya, kelebihannya otomatis dipakai untuk kasbon berikutnya, atau bisa dikembalikan dengan <strong>Kembalikan uang</strong>.</p>
+      </section>
+
+      <section id="member">
+        <h2><span class="n">10</span>Member dan poin</h2>
+        <ol class="steps">
+          <li>Pemilik menyalakan program di <span class="path">Akun <i>›</i> Member &amp; poin</span>. Awalnya setiap belanja Rp 10.000 memberi 1 poin, dan 1 poin bernilai Rp 100 saat dipakai. Keduanya bisa diubah.</li>
+          <li>Tandai pelanggan sebagai member: buka pelanggan di Kasbon, pilih <strong>Ubah</strong>, lalu nyalakan <strong>Member</strong>. Kasir juga bisa mendaftarkan member baru dari layar Kasir.</li>
+          <li>Saat jualan, pilih member di Kasir sebelum menekan <strong>Bayar</strong>. Layar Pembayaran menampilkan poin yang akan didapat dan pilihan memakai poin.</li>
+        </ol>
+        <p>Poin tidak hangus. Kasir boleh memakai poin member tanpa PIN, dan pemakaiannya tercatat di riwayat aktivitas. Bila transaksinya dibatalkan, semua poinnya kembali. Promo bisa dibuat khusus untuk member, lihat <a href="#promo">bagian 13</a>.</p>
+      </section>
+
+      <section id="supplier">
+        <h2><span class="n">11</span>Supplier dan barang masuk</h2>
+        <p>Buka <span class="path">Beranda <i>›</i> Supplier</span>. Di atas terlihat total utang ke supplier.</p>
+
+        <h3>Menambah supplier</h3>
+        <p>Tekan <strong>Tambah supplier</strong>. Isi nama (misalnya Toko Makmur atau Sales Indofood), nomor WhatsApp, tempo pembayaran dalam hari (kosong berarti 14 hari), dan catatan.</p>
+
+        <h3>Menerima barang</h3>
+        <ol class="steps">
+          <li>Buka supplier, lalu tekan <strong>Terima barang</strong>.</li>
+          <li>Tekan <strong>+ Tambah barang</strong>, isi jumlah dan harga beli setiap barang yang datang.</li>
+          <li>Pilih pembayaran: <strong>Lunas</strong>, atau <strong>Utang</strong> dengan tanggal jatuh tempo.</li>
+          <li>Tekan <strong>Simpan</strong>. Stok bertambah dan harga modal diperbarui.</li>
+        </ol>
+
+        <h3>Membayar utang</h3>
+        <p>Di detail supplier, tekan <strong>Bayar utang</strong>. Isi jumlahnya atau tekan <strong>Lunas</strong>, lalu pilih sumber uangnya:</p>
+        <ul>
+          <li><strong>Dari laci</strong>: tercatat sebagai kas keluar "Belanja stok". Toko harus sedang buka.</li>
+          <li><strong>Dari luar laci</strong>: dari rekening atau kantong pemilik. Uang di laci tidak berubah.</li>
+        </ul>
+        <p><span class="badge pin">Kasir: perlu PIN pemilik</span> Beranda mengingatkan utang yang sudah atau segera jatuh tempo.</p>
+
+        <h3>Pesanan ke supplier (PO)</h3>
+        <ol class="steps">
+          <li>Di detail supplier, tekan <strong>Buat pesanan (PO)</strong>. Tambahkan barang dan jumlahnya. Perkiraan harga boleh dikosongkan.</li>
+          <li>Tekan <strong>Simpan pesanan</strong>, lalu <strong>Kirim lewat WhatsApp</strong> ke supplier.</li>
+          <li>Saat barang datang, buka pesanan itu dan tekan <strong>Terima barang</strong>. Barang boleh datang sebagian.</li>
+          <li>Kalau sisa barang tidak akan datang, tekan <strong>Tandai selesai</strong>. Pesanan yang tidak jadi bisa dibatalkan.</li>
+        </ol>
+      </section>
+
+      <section id="opname">
+        <h2><span class="n">12</span>Stok opname</h2>
+        <p>Mencocokkan stok di aplikasi dengan barang yang benar-benar ada. Boleh sebagian dulu, misalnya satu rak atau satu kategori; stok barang yang tidak dihitung tidak diubah.</p>
+        <ol class="steps">
+          <li>Buka <span class="path">Barang <i>›</i> Stok opname <i>›</i> Mulai opname</span>.</li>
+          <li>Ketuk barang, atau scan barcodenya, lalu isi jumlah yang ada di rak dan gudang. Barang dengan beberapa satuan bisa dihitung per dus, pak, dan pcs; aplikasi menjumlahkannya.</li>
+          <li>Opname bisa ditinggal dan dilanjutkan nanti dengan <strong>Lanjutkan menghitung</strong>.</li>
+          <li>Tekan <strong>Periksa hasil</strong>. Barang dibagi menjadi <strong>Ada selisih</strong> dan <strong>Cocok</strong>, beserta nilai selisihnya.</li>
+          <li>Tekan <strong>Simpan hasil opname</strong>. <span class="badge pin">Kasir: perlu PIN pemilik</span></li>
+        </ol>
+        <div class="callout warn">
+          <span class="label">Perhatian</span>
+          <p>Barang yang sedang disisihkan untuk pesanan yang disimpan jangan ikut dihitung. Aplikasi memberi tanda pada barang seperti itu.</p>
+        </div>
+      </section>
+
+      <section id="promo">
+        <h2><span class="n">13</span>Promo</h2>
+        <p>Buka <span class="path">Barang <i>›</i> Promo <i>›</i> Buat promo</span>. <span class="badge owner">Pemilik saja</span> Promo berlaku sendiri di Kasir; kasir tidak perlu menekan apa pun.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Jenis promo</th><th>Contoh</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Diskon barang</strong></td><td>Diskon minuman akhir bulan: potong persen atau rupiah untuk barang tertentu atau satu kategori.</td></tr>
+              <tr><td><strong>Beli X gratis Y</strong></td><td>Beli 2 gratis 1 Mie. Gratisnya bisa barang yang sama atau barang lain; kasir diingatkan bila lupa memasukkan barang gratisnya.</td></tr>
+              <tr><td><strong>Harga paket</strong></td><td>Paket Sembako: minimal 2 barang dengan satu harga paket. Masukkan sekaligus dengan tombol paket di Kasir.</td></tr>
+              <tr><td><strong>Minimal belanja</strong></td><td>Belanja Rp 100 ribu potong Rp 5 ribu.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul>
+          <li>Atur <strong>Waktu</strong>: tanggal mulai, dan hari terakhir atau tanpa batas akhir.</li>
+          <li>Nyalakan <strong>Khusus member</strong> agar promo hanya berlaku bila member dipilih di Kasir.</li>
+          <li>Status promo: Berlaku, Akan datang, Dimatikan, atau Selesai. Promo bisa dimatikan dan dinyalakan lagi.</li>
+        </ul>
+      </section>
+
+      <section id="laporan">
+        <h2><span class="n">14</span>Laporan</h2>
+        <p>Pilih periode: <strong>Hari ini</strong>, <strong>Kemarin</strong>, <strong>7 hari</strong>, <strong>Bulan ini</strong>, <strong>Bulan lalu</strong>, atau <strong>Pilih tanggal</strong>.</p>
+        <ul>
+          <li><strong>Penjualan</strong>: uang yang diterima, sudah dikurangi retur.</li>
+          <li><strong>Untung kotor</strong>: penjualan dikurangi PPN dan harga modal. <span class="badge owner">Hanya terlihat oleh pemilik</span></li>
+          <li>Jumlah transaksi, rata-rata per transaksi, dan transaksi yang dibatalkan.</li>
+          <li>Penjualan per cara bayar, penjualan per hari, dan barang terlaris.</li>
+          <li><strong>PPN terkumpul</strong>, bila toko memakai PPN.</li>
+          <li><strong>Daftar transaksi</strong>: ketuk untuk melihat detail, mencetak ulang, membatalkan, atau meretur.</li>
+        </ul>
+
+        <h3>Ekspor ke Excel atau PDF</h3>
+        <ol class="steps">
+          <li>Tekan <strong>Ekspor</strong>, lalu pilih format <strong>Excel</strong> atau <strong>PDF</strong>.</li>
+          <li>Pilih isinya: Ringkasan &amp; laba, Daftar transaksi, Penjualan per barang, dan Stok barang.</li>
+          <li>Tekan <strong>Buat &amp; bagikan</strong>, lalu kirim ke WhatsApp, email, atau simpan di Google Drive.</li>
+        </ol>
+      </section>
+
+      <section id="cloud">
+        <h2><span class="n">15</span>Cloud dan beberapa outlet</h2>
+        <p>Semua ini pilihan. Tanpa cloud, aplikasi tetap bisa dipakai penuh.</p>
+
+        <h3>Sinkronisasi cloud</h3>
+        <p><span class="path">Akun <i>›</i> Sinkronisasi cloud <i>›</i> Hubungkan akun Google</span>. <span class="badge owner">Pemilik saja</span> Penjualan, stok, kas, kasbon, dan utang supplier dikirim ke cloud secara otomatis setiap HP tersambung internet. Hanya akun Google itu yang bisa melihat datanya.</p>
+        <ul>
+          <li>Status pengiriman terlihat di layar itu. Tekan <strong>Kirim sekarang</strong> untuk mengirim langsung.</li>
+          <li><strong>Putuskan</strong> hanya menghentikan pengiriman. Data yang sudah terkirim tetap ada di cloud.</li>
+        </ul>
+        <div class="callout warn">
+          <span class="label">Perhatian</span>
+          <p>Cloud adalah salinan untuk dipantau, bukan pengganti cadangan. Untuk pindah HP atau berjaga-jaga bila HP rusak, tetap buat <a href="#keamanan">cadangan data</a>.</p>
+        </div>
+
+        <h3>Pantau toko</h3>
+        <p>Pemilik bisa melihat toko dari HP lain. Pasang Jaga Warung di HP pemilik, pilih <strong>Pantau toko saja</strong>, lalu <strong>Masuk dengan Google</strong> memakai akun yang sama dengan HP kasir. Di HP kasir, menu yang sama ada di <span class="path">Akun <i>›</i> Pantau toko</span>.</p>
+        <p>Ada empat tab: <strong>Penjualan</strong>, <strong>Stok</strong>, <strong>Kasbon &amp; Utang</strong>, dan <strong>Shift &amp; Aktivitas</strong>. Di atas terlihat kapan data terakhir masuk; bila sudah lama, HP kasir mungkin sedang offline. Bila punya beberapa outlet, pilih outletnya lewat menu ⋮ <strong>Ganti toko</strong>.</p>
+
+        <h3>Beberapa outlet</h3>
+        <p>Setiap HP kasir adalah satu outlet. Pasang Jaga Warung di HP kasir cabang, hubungkan ke akun Google yang sama, lalu pilih <strong>Outlet baru</strong>. Pilih outlet lama hanya bila HP itu menggantikan HP kasir outlet tersebut.</p>
+
+        <h3>Transfer stok antar outlet</h3>
+        <ol class="steps">
+          <li>Di outlet pengirim, buka <span class="path">Barang <i>›</i> Transfer stok <i>›</i> Kirim barang</span>. Pilih outlet tujuan, barang, dan jumlahnya (tidak boleh melebihi stok), lalu tekan <strong>Kirim stok</strong>. Stok pengirim langsung berkurang. Ini bisa tanpa internet; kirimannya naik ke cloud saat HP online. <span class="badge pin">Kasir: perlu PIN pemilik</span></li>
+          <li>Di outlet tujuan (perlu internet), buka <strong>Transfer stok</strong>. Kiriman yang menunggu tampil di <strong>Kiriman masuk</strong>.</li>
+          <li>Buka kirimannya. Aplikasi mencocokkan setiap barang dengan barang di outlet ini; barang yang belum ada bisa dijadikan barang baru. Isi <strong>Jumlah diterima</strong> bila ada yang kurang atau rusak, lalu tekan <strong>Terima barang</strong>.</li>
+        </ol>
+        <p>Selisih antara yang dikirim dan yang diterima terlihat di kedua outlet. Satu kiriman hanya bisa diterima sekali.</p>
+
+        <h3>Menghapus akun cloud</h3>
+        <ol class="steps">
+          <li>Buka <span class="path">Akun <i>›</i> Sinkronisasi cloud <i>›</i> Hapus akun cloud</span>. Di HP mode Pantau toko saja, menu ini ada di menu ⋮.</li>
+          <li>Baca peringatannya, tekan <strong>Lanjut</strong>, lalu pilih akun Google yang terhubung.</li>
+          <li>Masukkan PIN pemilik.</li>
+        </ol>
+        <p>Semua data cloud dari semua outlet akun itu dihapus permanen, beserta akun cloud-nya. HP kasir lain yang terhubung akan terputus. Data di HP tetap ada. Bila penghapusan terhenti karena internet putus, tekan lagi untuk melanjutkan. Cara meminta penghapusan lewat email ada di <a href="hapus-akun.html" rel="noopener">halaman hapus akun</a>.</p>
+      </section>
+
+      <section id="keamanan">
+        <h2><span class="n">16</span>PIN, aktivitas, cadangan</h2>
+
+        <h3>Ganti orang yang jaga</h3>
+        <p>Saat pergantian kasir, tekan <strong>Ganti kasir</strong> di Akun. Orang berikutnya masuk dengan PIN-nya sendiri, sehingga setiap transaksi tercatat atas nama kasir yang benar.</p>
+
+        <h3>Lupa PIN</h3>
+        <ul>
+          <li><strong>Kasir</strong>: minta pemilik membuat PIN baru di <span class="path">Akun <i>›</i> Pengguna</span>.</li>
+          <li><strong>Pemilik</strong>: di layar kunci, tekan <strong>Lupa PIN?</strong>, masukkan kode pemulihan, lalu buat PIN baru.</li>
+        </ul>
+
+        <h3>Riwayat aktivitas</h3>
+        <p><span class="path">Akun <i>›</i> Riwayat aktivitas <i>›</i> Lihat riwayat</span>. <span class="badge owner">Pemilik saja</span> Daftar tindakan penting: pembatalan, retur, diskon, perubahan harga, kas keluar, penyesuaian stok, stok opname, bayar supplier, perubahan promo, poin, pajak, dan pengguna, transfer stok, serta toko yang ditutup dengan selisih. Setiap baris menunjukkan siapa yang melakukan, dan siapa pemilik yang menyetujuinya.</p>
+
+        <h3>Cadangan data</h3>
+        <p>Data toko hanya ada di HP. Kalau HP hilang, rusak, atau aplikasinya dihapus tanpa cadangan, datanya ikut hilang.</p>
+        <ol class="steps">
+          <li>Buka <span class="path">Akun <i>›</i> Cadangan data <i>›</i> Cadangkan / pulihkan</span>.</li>
+          <li>Tekan <strong>Simpan cadangan</strong>, lalu simpan file di tempat yang hanya Anda yang bisa buka, misalnya Google Drive Anda. Atau tekan <strong>Kirim lewat WhatsApp / aplikasi lain</strong>.</li>
+        </ol>
+        <p>Untuk mengembalikan data, misalnya di HP baru: tekan <strong>Pilih file cadangan</strong>, periksa ringkasannya (tanggal, jumlah transaksi, barang, dan pelanggan), lalu tekan <strong>Ganti &amp; mulai ulang</strong>. Semua data di HP itu diganti dengan isi cadangan.</p>
+        <div class="callout good">
+          <span class="label">Kebiasaan baik</span>
+          <p>Cadangkan seminggu sekali. Setiap tutup toko, aplikasi mengingatkan bila cadangan terakhir sudah lama.</p>
+        </div>
+      </section>
+
+      <section id="peran">
+        <h2><span class="n">17</span>Pemilik dan kasir</h2>
+        <p>Kasir bisa jualan, membuka dan menutup toko, dan mencatat kas. Beberapa tindakan yang menyangkut uang atau stok memerlukan PIN pemilik di HP kasir saat itu juga.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Tindakan</th><th>Kasir</th><th>Pemilik</th></tr></thead>
+            <tbody>
+              <tr><td>Jualan, diskon, pesanan disimpan, kirim dan cetak struk</td><td class="yes">Bisa</td><td class="yes">Bisa</td></tr>
+              <tr><td>Buka toko, tutup toko, kas masuk dan keluar</td><td class="yes">Bisa</td><td class="yes">Bisa</td></tr>
+              <tr><td>Tambah dan ubah barang, barang masuk, barang rusak</td><td class="yes">Bisa</td><td class="yes">Bisa</td></tr>
+              <tr><td>Kasbon: tambah pelanggan, terima pembayaran</td><td class="yes">Bisa</td><td class="yes">Bisa</td></tr>
+              <tr><td>Melihat untung kotor di Beranda dan Laporan</td><td class="no">Tidak</td><td class="yes">Bisa</td></tr>
+              <tr><td>Batalkan transaksi, retur barang</td><td class="pin">PIN pemilik</td><td class="yes">Bisa</td></tr>
+              <tr><td>Hitung ulang stok, simpan stok opname</td><td class="pin">PIN pemilik</td><td class="yes">Bisa</td></tr>
+              <tr><td>Bayar utang supplier</td><td class="pin">PIN pemilik</td><td class="yes">Bisa</td></tr>
+              <tr><td>Kirim transfer stok ke outlet lain</td><td class="pin">PIN pemilik</td><td class="yes">Bisa</td></tr>
+              <tr><td>Promo</td><td class="no">Tidak</td><td class="yes">Bisa</td></tr>
+              <tr><td>Profil toko, QRIS, pengguna, pajak, member &amp; poin</td><td class="no">Tidak</td><td class="yes">Bisa</td></tr>
+              <tr><td>Riwayat aktivitas, sinkronisasi cloud, Pantau toko, cadangan data</td><td class="no">Tidak</td><td class="yes">Bisa</td></tr>
+              <tr><td>Hapus akun cloud</td><td class="no">Tidak</td><td class="pin">PIN pemilik</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="masalah">
+        <h2><span class="n">18</span>Kalau ada masalah</h2>
+        <details class="faq">
+          <summary>Printer tidak mau mencetak</summary>
+          <p>Pastikan printer menyala, ada kertas, dan dekat dengan HP. Pastikan Bluetooth HP menyala dan printer sudah dipasangkan di pengaturan Bluetooth HP. Lalu buka <span class="path">Akun <i>›</i> Printer struk</span>, pilih printernya, dan tekan <strong>Cetak tes</strong>.</p>
+        </details>
+        <details class="faq">
+          <summary>"Barcode … tidak ditemukan"</summary>
+          <p>Barcode itu belum tercatat di barang mana pun. Buka barangnya di menu Barang, tambahkan barcodenya, lalu simpan. Kalau barangnya memang belum ada, tambahkan sebagai barang baru.</p>
+        </details>
+        <details class="faq">
+          <summary>Pembeli tidak bisa membayar QRIS</summary>
+          <p>Tekan <strong>QR tidak bisa dibayar? Tampilkan QRIS biasa</strong> di layar pembayaran; pembeli lalu mengetik nominalnya sendiri. Bila sering terjadi, matikan <strong>Nominal otomatis</strong> di <span class="path">Akun <i>›</i> QRIS toko</span>. Bila aplikasi bilang kode QRIS tidak ditemukan di gambar, pilih file QRIS asli dari aplikasi bank atau merchant.</p>
+        </details>
+        <details class="faq">
+          <summary>Scan kamera berhenti sendiri</summary>
+          <p>Scan dijeda setelah 20 detik tanpa barang baru, supaya tidak ada barang yang masuk tanpa sengaja. Tekan <strong>Lanjut scan</strong>.</p>
+        </details>
+        <details class="faq">
+          <summary>Transaksi tidak bisa dibatalkan</summary>
+          <p>Pembatalan hanya untuk transaksi di shift yang sedang buka, dan yang belum ada returnya. Untuk transaksi yang lebih lama, pakai <strong>Retur barang</strong> (sampai 7 hari setelah transaksi).</p>
+        </details>
+        <details class="faq">
+          <summary>Pesan di Sinkronisasi cloud</summary>
+          <ul>
+            <li><strong>Belum tersambung internet</strong>: data dikirim sendiri saat online.</li>
+            <li><strong>Batas gratis hari ini habis</strong>: pengiriman dilanjutkan besok. Jualan tidak terganggu.</li>
+            <li><strong>Akun Google terputus</strong>: tekan Putuskan, lalu hubungkan lagi dengan akun yang sama dan pilih outlet yang sama.</li>
+          </ul>
+        </details>
+        <details class="faq">
+          <summary>Pindah ke HP baru</summary>
+          <ol>
+            <li>Di HP lama, buat cadangan dan simpan di Google Drive.</li>
+            <li>Di HP baru, pasang Jaga Warung, siapkan toko, lalu buka <span class="path">Akun <i>›</i> Cadangan data <i>›</i> Cadangkan / pulihkan</span> dan pulihkan dari file itu.</li>
+            <li>Bila memakai cloud, hubungkan HP baru ke akun Google yang sama dan pilih outlet lama.</li>
+          </ol>
+        </details>
+
+        <footer>
+          <p>Pertanyaan atau masukan untuk Jaga Warung:</p>
+          <div class="copy"><code id="email">silodev77@gmail.com</code><button type="button" id="copy-email">Salin</button></div>
+          <p><a href="privasi.html">Kebijakan privasi</a> · <a href="hapus-akun.html">Hapus akun dan data</a></p>
+        </footer>
+      </section>
+    </article>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var button = document.getElementById("copy-email");
+    var email = document.getElementById("email");
+    button.addEventListener("click", function () {
+      var text = email.textContent;
+      function selectIt() {
+        var range = document.createRange();
+        range.selectNodeContents(email);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        button.textContent = "Tekan salin di HP";
+      }
+      try {
+        navigator.clipboard.writeText(text).then(function () {
+          button.textContent = "Tersalin";
+          setTimeout(function () { button.textContent = "Salin"; }, 1800);
+        }, selectIt);
+      } catch (e) {
+        selectIt();
+      }
+    });
+    // Close the phone contents after picking a section.
+    document.querySelectorAll(".toc-mobile a").forEach(function (link) {
+      link.addEventListener("click", function () { link.closest("details").open = false; });
+    });
+  })();
+</script>
+
+</body>
+</html>
